@@ -6,7 +6,7 @@ import '../global.css';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import {setupStore} from "@/store/store";
 import {Provider} from "react-redux";
-
+import NetworkLogger from 'react-native-network-logger';
 export const unstable_settings = {
   anchor: '(tabs)',
 };
@@ -15,16 +15,19 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Provider store={store}>
-          <Stack>
-              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-              <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+      <>
+        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+            <Provider store={store}>
+              <Stack>
+                  <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                  <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+                  <Stack.Screen name="logger" options={{ headerShown: false }} />
+                  <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
+              </Stack>
+              <StatusBar style="auto" />
+            </Provider>
+        </ThemeProvider>
 
-            <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-          </Stack>
-          <StatusBar style="auto" />
-        </Provider>
-    </ThemeProvider>
+      </>
   );
 }

@@ -1,26 +1,19 @@
-import {createSlice, type PayloadAction} from "@reduxjs/toolkit";
-
-import {jwtDecode} from "jwt-decode";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { jwtDecode } from "jwt-decode";
 import ITokenDecode from "@/model/auth/ITokenDecode";
 
-const getUserFromToken = (token: string) : ITokenDecode | null=>{
-    try{
-
-        const decode =  jwtDecode<ITokenDecode>(token)
-        return decode ?? null;
-    }
-    catch(err){
-        console.error(err);
+const getUserFromToken = (token: string): ITokenDecode | null => {
+    try {
+        return jwtDecode<ITokenDecode>(token) ?? null;
+    } catch {
         return null;
     }
 }
 
-const token : string = localStorage.token;
-const user = getUserFromToken(token);
-const initialState  = {
-    user : user
+const initialState: { user: ITokenDecode | null } = {
+    user: null  // AsyncStorage читається окремо
 }
-
 
 const authSlice = createSlice({
     name: "auth",
@@ -30,17 +23,17 @@ const authSlice = createSlice({
             const user = getUserFromToken(action.payload);
             if (user) {
                 state.user = user;
-                localStorage.token = action.payload;
+
             }
         },
         logout: (state) => {
             state.user = null;
-            localStorage.removeItem('token');
         },
+        setUser: (state, action: PayloadAction<ITokenDecode | null>) => {
+            state.user = action.payload;
+        }
     }
-
 });
 
-export const { loginSuccess, logout } = authSlice.actions;
-
+export const { loginSuccess, logout, setUser } = authSlice.actions;
 export default authSlice.reducer;
