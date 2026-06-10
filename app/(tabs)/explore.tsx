@@ -8,8 +8,16 @@ import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Fonts } from '@/constants/theme';
+import {Button} from "@/components/ui/button";
+import {logout} from "@/store/reducers/authSlice";
+import {useAppDispatch} from "@/hooks/redux";
+
+
+import {router} from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function TabTwoScreen() {
+    const dispatch = useAppDispatch();
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
@@ -94,6 +102,17 @@ export default function TabTwoScreen() {
           ),
         })}
       </Collapsible>
+        <Button
+            label="Вийти"
+            onPress={async () => {
+
+                await AsyncStorage.removeItem("token");
+                dispatch(logout());
+                router.replace("/(auth)/login");
+            }}
+            variant="danger"
+            size="lg"
+        />
     </ParallaxScrollView>
   );
 }

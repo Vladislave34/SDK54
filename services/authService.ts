@@ -9,6 +9,7 @@ import {API_ENV} from "@/env";
 
 import IRegisterModel from "@/model/auth/IRegisterModel";
 import {serialize} from "object-to-formdata";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 
@@ -16,6 +17,13 @@ export const authApi  = createApi({
     reducerPath: "authApi",
     baseQuery: fetchBaseQuery({
         baseUrl: `${API_ENV.API_BASE_URL}/Account/`,
+        prepareHeaders: async (headers) => {
+            const token = await AsyncStorage.getItem("token");
+            if (token) {
+                headers.set("Authorization", `Bearer ${token}`);
+            }
+            return headers;
+        },
 
     }),
     tagTypes: ['Auth'],

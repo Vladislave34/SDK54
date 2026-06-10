@@ -1,19 +1,32 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
+import {router, Stack} from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 import '../global.css';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import {setupStore} from "@/store/store";
 import {Provider} from "react-redux";
-import NetworkLogger from 'react-native-network-logger';
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+
+import {useEffect} from "react";
 export const unstable_settings = {
   anchor: '(tabs)',
 };
 const store = setupStore();
 export default function RootLayout() {
   const colorScheme = useColorScheme();
+    useEffect(() => {
+        const checkAuth = async () => {
+            const token = await AsyncStorage.getItem("token");
+            if (!token) {
+                router.replace("/login");
+            }
+        };
 
+        checkAuth();
+    }, []);
   return (
       <>
         <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
