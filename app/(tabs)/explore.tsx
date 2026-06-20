@@ -102,17 +102,7 @@ export default function TabTwoScreen() {
           ),
         })}
       </Collapsible>
-        <Button
-            label="Вийти"
-            onPress={async () => {
 
-                await AsyncStorage.removeItem("token");
-                dispatch(logout());
-                router.replace("/(auth)/login");
-            }}
-            variant="danger"
-            size="lg"
-        />
     </ParallaxScrollView>
   );
 }

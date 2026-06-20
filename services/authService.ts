@@ -10,6 +10,8 @@ import {API_ENV} from "@/env";
 import IRegisterModel from "@/model/auth/IRegisterModel";
 import {serialize} from "object-to-formdata";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import IUserModel from "@/model/auth/IUserModel";
+import IEditProfile from "@/model/auth/IEditProfile";
 
 
 
@@ -47,6 +49,26 @@ export const authApi  = createApi({
                 body: model
 
             }),
+            invalidatesTags: ["Auth"]
+        }),
+        getUser: build.query<IUserModel, void>({
+            query: () => {
+                return {
+                    url: "Me",
+                    method: "GET",
+                }
+            },
+            providesTags: ['Auth']
+        }),
+        editUser: build.mutation<void, IEditProfile>({
+            query: (model)=>{
+                const data = serialize(model);
+                return{
+                    url: 'EditProfile',
+                    method: "PUT",
+                    body: data
+                }
+            },
             invalidatesTags: ["Auth"]
         })
     })

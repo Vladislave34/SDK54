@@ -2,10 +2,12 @@ import {combineReducers} from "redux";
 import {configureStore} from "@reduxjs/toolkit";
 import {authApi} from "@/services/authService";
 import authSlice from "@/store/reducers/authSlice";
+import {chatService} from "@/services/chatService";
 
 
 const rootReducer = combineReducers({
     [authApi.reducerPath]: authApi.reducer,
+    [chatService.reducerPath]: chatService.reducer,
     authSlice
 })
 
@@ -15,6 +17,7 @@ export const setupStore = ()=>{
         middleware: (getDefaultMiddleware) =>
             getDefaultMiddleware().concat(
                 authApi.middleware,
+                chatService.middleware
             )
     })
 }

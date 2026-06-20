@@ -22,7 +22,7 @@ export default function LoginScreen() {
         console.log(res);
         dispatch(loginSuccess(res.token));
         await AsyncStorage.setItem('token', res.token);
-        router.push("/explore");
+        router.push("/chat/home");
     };
     const onHandleToLogger = () => {
         router.push("/logger");
