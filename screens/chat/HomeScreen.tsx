@@ -8,7 +8,7 @@ import * as ImagePicker from "expo-image-picker";
 import {useAppDispatch, useAppSelector} from "@/hooks/redux";
 import {BASE_URL} from "@/env";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {logout} from "@/store/reducers/authSlice";
+import {loginSuccess, logout} from "@/store/reducers/authSlice";
 import IEditProfile from "@/model/auth/IEditProfile";
 import {authApi} from "@/services/authService";
 
@@ -68,16 +68,19 @@ export default function HomeScreen() {
             email,
             firstName,
             lastName,
-            image: editImage ? (editImage as unknown as File) : (user.image ?? ""),
+            imageFile: editImage
         };
 
         try {
-            await editUser(model).unwrap();
+            const res = await editUser(model).unwrap();
+            dispatch(loginSuccess(res.token));
+            await AsyncStorage.setItem('token', res.token);
             setIsEditModalVisible(false);
         } catch (error) {
             console.error("Помилка оновлення профілю:", error);
         }
     };
+    console.log("homescreen");
 
     return (
         <View className="flex-1 bg-zinc-50 dark:bg-zinc-950">
@@ -156,7 +159,7 @@ export default function HomeScreen() {
 
                         <TouchableOpacity
                             activeOpacity={0.85}
-                            onPress={() => console.log('Join Chat')}
+                            onPress={() => router.replace('/chat/join')}
                             className="border border-zinc-300 dark:border-zinc-700 py-4 rounded-2xl items-center"
                         >
                             <Text className="text-zinc-900 dark:text-zinc-100 text-lg font-semibold">

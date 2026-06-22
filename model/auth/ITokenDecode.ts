@@ -3,5 +3,6 @@ export default interface ITokenDecode {
     name: string,
     image: string,
     roles: string[],
-    exp: number
+    exp: number,
+    token: string
 }

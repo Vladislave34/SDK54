@@ -60,7 +60,7 @@ export const authApi  = createApi({
             },
             providesTags: ['Auth']
         }),
-        editUser: build.mutation<void, IEditProfile>({
+        editUser: build.mutation<{token : string}, IEditProfile>({
             query: (model)=>{
                 const data = serialize(model);
                 return{

@@ -4,4 +4,5 @@ export default interface IUserModel {
     fullName: string;
     email: string;
     image: string;
+
 }
