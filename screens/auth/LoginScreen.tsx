@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Pressable } from "react-native";
+import {View, Text, TextInput, Pressable, TouchableOpacity} from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import {useRouter} from "expo-router";
 import {authApi} from "@/services/authService";
@@ -72,6 +72,14 @@ export default function LoginScreen() {
             >
                 <Text className="text-white font-semibold">Логер</Text>
             </Pressable>
+            <TouchableOpacity
+                className="mb-6 mt-2"
+                onPress={() => router.push('/forgot-password')}
+            >
+                <Text className="font-spartan-semibold text-[13px] text-[#093030] dark:text-[#DFF7E2]">
+                    Forgot Password?
+                </Text>
+            </TouchableOpacity>
         </View>
     );
 }

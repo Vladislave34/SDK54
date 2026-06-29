@@ -12,6 +12,8 @@ import {serialize} from "object-to-formdata";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import IUserModel from "@/model/auth/IUserModel";
 import IEditProfile from "@/model/auth/IEditProfile";
+import {IForgotPasswordModel} from "@/model/auth/IForgotPasswordModel";
+import IResetPasswordModel from "@/model/auth/IResetPasswordModel";
 
 
 
@@ -70,6 +72,19 @@ export const authApi  = createApi({
                 }
             },
             invalidatesTags: ["Auth"]
+        }),
+        forgotPassword: build.mutation<void, IForgotPasswordModel>({
+            query: (model) => ({
+                url: 'ForgotPassword',
+                method: 'POST',
+                body: model
+            })
+        }),
+        resetPassword: build.mutation<void, IResetPasswordModel>({
+            query: (model)=>({
+                url: "ResetPassword",
+                body: model
+            })
         })
     })
 })

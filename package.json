@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
+    "@hookform/resolvers": "^5.4.0",
     "@microsoft/signalr": "^10.0.0",
     "@react-native-async-storage/async-storage": "2.2.0",
     "@react-navigation/bottom-tabs": "^7.4.0",
@@ -37,7 +38,7 @@
     "object-to-formdata": "^4.5.1",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "react-hook-form": "^7.76.1",
+    "react-hook-form": "^7.80.0",
     "react-native": "0.81.5",
     "react-native-config": "^1.6.1",
     "react-native-gesture-handler": "~2.28.0",
@@ -47,7 +48,8 @@
     "react-native-screens": "~4.16.0",
     "react-native-web": "~0.21.0",
     "react-native-worklets": "0.5.1",
-    "react-redux": "^9.3.0"
+    "react-redux": "^9.3.0",
+    "yup": "^1.7.1"
   },
   "devDependencies": {
     "@types/react": "~19.1.0",
